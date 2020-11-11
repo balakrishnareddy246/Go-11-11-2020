@@ -1,0 +1,8 @@
+// Add new contact
+func createContact(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var contact Contact
+	_ = json.NewDecoder(r.Body).Decode(&contact)
+	contacts = append(contacts, contact)
+	json.NewEncoder(w).Encode(contact)
+}

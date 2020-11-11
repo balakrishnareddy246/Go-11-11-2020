@@ -1,0 +1,16 @@
+// Update contact
+func updateContact(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	params := mux.Vars(r)
+	for idx, item := range contacts {
+		if item.Name == params["name"] {
+			contacts = append(contacts[:idx], contacts[idx+1:]...)
+			var contact Contact
+			_ = json.NewDecoder(r.Body).Decode(&contact)
+			contact.Name = params["name"]
+			contacts = append(contacts, contact)
+			json.NewEncoder(w).Encode(contact)
+			return
+		}
+	}
+}
